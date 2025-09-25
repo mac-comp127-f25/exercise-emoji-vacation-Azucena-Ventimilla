@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("SameParameterValue")
-public class EmojiVacation {
+public class EmojiVacation { // class declaration
     private static final Color
         SUN_YELLOW = new Color(0xffff78),
         SUN_BORDER_YELLOW = new Color(0xdcdc3c),
@@ -26,14 +26,23 @@ public class EmojiVacation {
 
     private static Random random = new Random();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { // main method
         CanvasWindow canvas = new CanvasWindow("Emoji Family Vacation", SCENE_WIDTH, SCENE_HEIGHT);
         doSlideShow(canvas);
     }
 
-    private static void doSlideShow(CanvasWindow canvas) {
+    private static void doSlideShow(CanvasWindow canvas) { 
         // TODO: [Instructions step 8] Change this to an actual slideshow
-        generateVacationPhoto(canvas);
+        
+        
+        for (int i=1; i>0; i++) {
+            generateVacationPhoto(canvas);
+            canvas.draw();
+            canvas.pause(3000);
+            canvas.removeAll();
+
+        }
+
     }
 
     private static void generateVacationPhoto(CanvasWindow canvas) {
@@ -43,64 +52,82 @@ public class EmojiVacation {
 
         addCloudRows(canvas);
 
-        // TODO: [Instructions step 2] Create mountains 50% of the time.
-        //       You should randomly determine the size and number of layers
-        //       (within reasonable constraints).
-
         addGround(canvas, 400);
 
-        // TODO: [Instructions step 2] Create forests 60% of the time. You should randomly
-        //       determine the count for the number of trees. Pick reasonable values for
-        //       other parameters.
+        // Randomizing parameteres values
+        Double size = randomDouble(100, 150);
+        int layers = randomInt(5, 9);
+        Double baseY = randomDouble(400, 470 ); // I look at the code for addGround and did trial and error
+        Double ySpan = randomDouble(100,  200);
+        int count = randomInt(0, 10);
 
+        // Creates mountains 50% of the time
+        if (percentChance(50)) {
+            addMountains(canvas, 400, size, layers);
+        }
+
+        // Creates a forest 60% of the time
+        if (percentChance(60)) {
+            addForest(canvas, baseY, ySpan, count);
+        }
+
+        // Iterating through the family list
         List<GraphicsGroup> family = createFamily(2, 3);
         positionFamily(family, 60, 550, 20);
-        // TODO: [Instructions step 4] Add each emoji in the list to the canvas
-    }
+        for (int i=0; i <= family.size()-1;  i++) {
+            GraphicsGroup emoji = family.get(i);
+            canvas.add(emoji);
+        }
+        
+    }  
 
     // –––––– Emoji family –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
     private static List<GraphicsGroup> createFamily(int adultCount, int childCount) {
         double adultSize = 160, childSize = 90;
 
-        // TODO: [Instructions step 6] Change this so that instead of always creating one adult
-        //       and one child, it instead creates a list containing adultCount adults,
-        //       and childCount children.
-        //
-        // Hint: You can't use List.of() to do this, because you don't know the size of the
-        // resulting list before the code actually runs. What can you use?
-        //
-        return List.of(
-            createRandomEmoji(adultSize),
-            createRandomEmoji(childSize));
+        List<GraphicsGroup> myFamilyList = new ArrayList<>();
+        for (int i = 1; i <= adultCount; i++) {
+            myFamilyList.add(createRandomEmoji(adultSize));
+        }
+        for (int j = 1; j <= childCount; j++) {
+            myFamilyList.add(createRandomEmoji(childSize));
+        }
+
+        return myFamilyList;
     }
 
     private static GraphicsGroup createRandomEmoji(double size) {
-        // TODO: [Instructions step 7] Change this so that instead of always creating a smiley face,
-        //       it randomly selects one of the many available emojis.
-        //
-        // Hint: You can use chained if/else conditionals: with a certain probability, return emoji
-        // type A, else with some other probability return emoji type B, else with a certain
-        // probability ... etc ... else return a smiley by default.
-        //
-        return ProvidedEmojis.createSmileyFace(size);
+        // Creating a list of emojis (GraphicsGroups) from different packages
+        List<GraphicsGroup> myEmojisList = List.of(
+            ProvidedEmojis.createContentedFace(size),
+            ProvidedEmojis.createFrownyFace(size),
+            ProvidedEmojis.createNauseousFace(size),
+            ProvidedEmojis.createSmileyFace(size),
+            ProvidedEmojis.createWinkingFace(size),
+            Emojis.createSmileyFace(size));
+
+            int emojiTypeIndex = randomInt(0, myEmojisList.size()-1); // Randomly choosing a emojis type 
+
+            GraphicsGroup newEmoji = myEmojisList.get(emojiTypeIndex); 
+
+
+        return newEmoji;
     }
 
     private static void positionFamily(
             List<GraphicsGroup> family,
             double leftX,
             double baselineY,
-            double spacing
-    ) {
-        // TODO: [Instructions step 5] Iterate over the emojis in the list,
-        //       and position them all in a neat row
+            double spacing) {
+        
+        for (int i=0; i <= family.size()-1;  i++) {
+            GraphicsGroup emoji = family.get(i);
+            double newY = baselineY - emoji.getHeight();
+            emoji.setPosition(leftX, newY);
+            leftX = emoji.getX() + emoji.getWidth() + spacing;
+        }
 
-        // The leftmost emoji’s left edge should be at leftX, and spacing is the number of pixels that should be between
-        // each emoji and the next. But how to you space them if the kids and adults have different widths? (Hint: you
-        // can ask any graphics object for its width.)
-        //
-        // The bottom of each emoji should be baselineY. But setPosition() sets the _top_! How do you set the bottom to
-        // a given position? (Hint: you can ask any graphics object for its height.)
     }
 
     // –––––– Scenery ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
@@ -375,3 +402,5 @@ public class EmojiVacation {
         return Math.min(255, Math.max(0, c + randomInt(-amount, amount)));
     }
 }
+
+
