@@ -4,15 +4,15 @@
 
 ### Correctness
 
-- [ ] Image background shows trees 60% of the time, and mountains 50% of the time (mountains and trees may both appear in one image)
-- [ ] The program draws a “family” of emojis, containing a number of emojis based on the parameters to `createFamily()`
-- [ ] Each emoji in the family is randomly selected, based on your implementation of `createRandomEmoji()`
-- [ ] When run, your program iterates through an endless slideshow of these emoji photos, each with randomized backgrounds and emoji styles
-  - [ ] There is a pause for three seconds on each image so that a viewer may enjoy the slideshow!
-- [ ] (Optional) Additional randomly-selected background scenery
-- [ ] (Optional) A dark transition between each slide of the slideshow
-- [ ] (Optional) Child and adult emojis are shown in a random order
-- [ ] (Optional) Modify the background to include multiple times of day in the random scenery
+- [x] Image background shows trees 60% of the time, and mountains 50% of the time (mountains and trees may both appear in one image)
+- [x] The program draws a “family” of emojis, containing a number of emojis based on the parameters to `createFamily()`
+- [x] Each emoji in the family is randomly selected, based on your implementation of `createRandomEmoji()`
+- [x] When run, your program iterates through an endless slideshow of these emoji photos, each with randomized backgrounds and emoji styles
+  - [x] There is a pause for three seconds on each image so that a viewer may enjoy the slideshow!
+- [!] (Optional) Additional randomly-selected background scenery
+- [!] (Optional) A dark transition between each slide of the slideshow
+- [!] (Optional) Child and adult emojis are shown in a random order
+- [!] (Optional) Modify the background to include multiple times of day in the random scenery
 
 ### Code Style
 
