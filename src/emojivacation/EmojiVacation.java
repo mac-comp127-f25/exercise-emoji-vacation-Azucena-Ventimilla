@@ -32,17 +32,14 @@ public class EmojiVacation { // class declaration
     }
 
     private static void doSlideShow(CanvasWindow canvas) { 
-        // TODO: [Instructions step 8] Change this to an actual slideshow
-        
-        
+
         for (int i=1; i>0; i++) {
             generateVacationPhoto(canvas);
             canvas.draw();
             canvas.pause(3000);
+            canvas.setBackground(Color.BLACK);
             canvas.removeAll();
-
         }
-
     }
 
     private static void generateVacationPhoto(CanvasWindow canvas) {
